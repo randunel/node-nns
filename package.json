@@ -4,7 +4,7 @@
     "description": "Linux network namespaces with node.",
     "main": "index.js",
     "scripts": {
-        "test": "make test"
+        "test": "./node_modules/.bin/mocha --growl --ignore-leaks --timeout 30000 test/*.test.js"
     },
     "repository": {
         "type": "git",
@@ -22,6 +22,10 @@
     "bugs": {
         "url": "https://github.com/randunel/node-network-namespace/issues"
     },
-    "homepage": "https://github.com/randunel/node-network-namespace#readme"
+    "homepage": "https://github.com/randunel/node-network-namespace#readme",
+    "devDependencies": {
+        "should": "8.2.x",
+        "mocha": "2.3.x"
+    }
 }
 
