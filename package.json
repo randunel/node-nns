@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/randunel/node-network-namespace.git"
+        "url": "git+https://github.com/randunel/node-nns.git"
     },
     "keywords": [
         "netns",
@@ -20,9 +20,9 @@
     "author": "Mihai Ene <dkrandu@yahoo.com>",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/randunel/node-network-namespace/issues"
+        "url": "https://github.com/randunel/node-nns/issues"
     },
-    "homepage": "https://github.com/randunel/node-network-namespace#readme",
+    "homepage": "https://github.com/randunel/node-nns#readme",
     "devDependencies": {
         "should": "8.2.x",
         "mocha": "2.3.x"
