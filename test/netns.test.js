@@ -24,6 +24,11 @@ describe('network namespaces', () => {
                 .then(output => util.exec(`ip netns exec test99 ping -c 1 ${output.split('via ')[1].split(' ')[0]}`))
                 .then(output => output.should.match(/1\s(packets |)received/))
             );
+
+            it('should access the internet', () => netns(getNNSParams())
+                .then(() => util.exec(`ip netns exec test99 ping -c 1 8.8.8.8`))
+                .then(output => output.should.match(/1\s(packets |)received/))
+            );
         });
     });
 
