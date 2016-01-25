@@ -1,5 +1,5 @@
 {
-    "name": "node-network-namespace",
+    "name": "nns",
     "version": "1.0.0",
     "description": "Linux network namespaces with node.",
     "main": "index.js",

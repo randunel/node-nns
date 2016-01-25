@@ -130,15 +130,9 @@ let netns = (params) => {
                         link: vethDefault
                     })
                 ]),
-                config: {
-                    name,
-                    vethDefault,
-                    vethNNS,
-                    ipDefault,
-                    ipNNS,
-                    netmask,
-                    network
-                }
+                config: Object.freeze(nns),
+                exec: namespace.getExec(nns.name),
+                execNoWait: namespace.getExecNoWait(nns.name)
             }));
     });
 };
