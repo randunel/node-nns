@@ -1,8 +1,20 @@
 ## nns
 
-Creates network namespaces.
+Creates network namespaces with a fully working internet connection.
 
 ## Usage
+
+#### Simply create a network namespace, don't care about settings
+```js
+let nns = require('nns'); // 1. require
+nns() // 2. invoke
+    .then(() => {
+    // 3. ???
+    })
+    .then(() => {
+        console.log('Profit!'); // 4.
+    })
+```
 
 #### Create a network namespace with specific config.
 ```js
@@ -35,18 +47,6 @@ nns({ // 2. invoke
 })
     .then(() => {
         // 3. ???
-    })
-    .then(() => {
-        console.log('Profit!'); // 4.
-    })
-```
-
-#### Simply create a network namespace, don't care about settings
-```js
-let nns = require('nns'); // 1. require
-nns() // 2. invoke
-    .then(() => {
-    // 3. ???
     })
     .then(() => {
         console.log('Profit!'); // 4.
