@@ -6,29 +6,25 @@ let util = require('../lib/util');
 describe('network namespaces', () => {
     describe('setup', () => {
         before(() => util.exec('node dev/cleanup.js'));
-        afterEach(() => util.exec('node dev/cleanup.js'));
+        //afterEach(() => util.exec('node dev/cleanup.js'));
 
-        it('should create a network namespace with provided netns', () => netns(getNNSParams())
+        it.only('should create a network namespace with provided netns', () => netns(getNNSParams())
             .then(() => util.exec('ip netns show'))
-            .then(list => list.should.containEql('test99'))
-        );
+            .then(list => list.should.containEql('test99')));
 
         it('should create a network namespace with provided defaults', () => netns(getNNSDefaults())
             .then(() => util.exec('ip netns show'))
-            .then(list => list.should.containEql('test0'))
-        );
+            .then(list => list.should.containEql('test0')));
 
         describe('network namespace', () => {
             it('should access physical interface', () => netns(getNNSParams())
                 .then(() => util.exec('ip route get 8.8.8.8'))
                 .then(output => util.exec(`ip netns exec test99 ping -c 1 ${output.split('via ')[1].split(' ')[0]}`))
-                .then(output => output.should.match(/1\s(packets |)received/))
-            );
+                .then(output => output.should.match(/1\s(packets |)received/)));
 
             it('should access the internet', () => netns(getNNSParams())
                 .then(() => util.exec(`ip netns exec test99 ping -c 1 8.8.8.8`))
-                .then(output => output.should.match(/1\s(packets |)received/))
-            );
+                .then(output => output.should.match(/1\s(packets |)received/)));
         });
     });
 
@@ -38,20 +34,17 @@ describe('network namespaces', () => {
         it('should delete a network namespace', () => netns(getNNSParams())
             .then(nns => nns.destroy())
             .then(() => util.exec(`ip netns list`))
-            .then(list => list.should.not.containEql('test99'))
-        );
+            .then(list => list.should.not.containEql('test99')));
 
         it('should delete netns rules in default ns', () => netns(getNNSParams())
             .then(nns => nns.destroy())
             .then(() => util.exec(`ip route show`))
-            .then(list => list.should.not.containEql('169.254'))
-        );
+            .then(list => list.should.not.containEql('169.254')));
 
         it('should delete netns iptables in default ns', () => netns(getNNSParams())
             .then(nns => nns.destroy())
             .then(() => util.exec(`iptables -t nat -vnL`))
-            .then(list => list.should.not.containEql('169.254'))
-        );
+            .then(list => list.should.not.containEql('169.254')));
     });
 });
 
