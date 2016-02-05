@@ -1,6 +1,6 @@
 {
     "name": "nns",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Linux network namespaces with node.",
     "main": "index.js",
     "scripts": {
