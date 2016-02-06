@@ -14,8 +14,7 @@
         "netns",
         "network",
         "namespace",
-        "network",
-        "namespace"
+        "network namespace"
     ],
     "author": "Mihai Ene <dkrandu@yahoo.com>",
     "license": "Apache-2.0",
