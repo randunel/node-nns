@@ -49,6 +49,8 @@ let netns = (params) => {
     let ipStart = '169.254.1.0';
     let ipMask = 30;
 
+    const noImmediateRouting = params.noImmediateRouting || false;
+
     let defaults, nns;
     if ('undefined' !== typeof params) {
         if ('undefined' !== typeof params.name) {
@@ -109,6 +111,10 @@ let netns = (params) => {
                 name,
                 vethNNS,
                 ipDefault,
+            }))
+            .then(() => noImmediateRouting ? undefined : namespace.setupImmediateRouting({
+                name,
+                vethNNS,
             }))
             .then(() => netutil.addRoute({
                 network,

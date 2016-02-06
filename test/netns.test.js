@@ -8,7 +8,7 @@ describe('network namespaces', () => {
         before(() => util.exec('node dev/cleanup.js'));
         //afterEach(() => util.exec('node dev/cleanup.js'));
 
-        it.only('should create a network namespace with provided netns', () => netns(getNNSParams())
+        it('should create a network namespace with provided netns', () => netns(getNNSParams())
             .then(() => util.exec('ip netns show'))
             .then(list => list.should.containEql('test99')));
 
@@ -21,6 +21,33 @@ describe('network namespaces', () => {
                 .then(() => util.exec('ip route get 8.8.8.8'))
                 .then(output => util.exec(`ip netns exec test99 ping -c 1 ${output.split('via ')[1].split(' ')[0]}`))
                 .then(output => output.should.match(/1\s(packets |)received/)));
+
+            it('should have immediate route', () => Promise.all([
+                netns(getNNSParams()),
+                util.exec('ip route get 8.8.8.8')
+                    .then(output => output.split('via ')[1].split(' ')[0].split('.').slice(0, 3).join('.'))
+            ])
+                .then(results => {
+                    const netns = results[0];
+                    const route = results[1];
+                    return netns.exec('ip r l')
+                        .then(output => output.should.containEql(route));
+                }));
+
+            it('should not have immediate route', () => Promise.all([
+                netns(Object.assign(getNNSParams(), {
+                    noImmediateRouting: true
+                })),
+                util.exec('ip route get 8.8.8.8')
+                    .then(output => output.split('via ')[1].split(' ')[0].split('.').slice(0, 3).join('.'))
+            ])
+                .then(results => {
+                    const netns = results[0];
+                    const route = results[1];
+                    return netns.exec('ip r l')
+                        .then(output => output.should.not.containEql(route));
+                }));
+
 
             it('should access the internet', () => netns(getNNSParams())
                 .then(() => util.exec(`ip netns exec test99 ping -c 1 8.8.8.8`))
